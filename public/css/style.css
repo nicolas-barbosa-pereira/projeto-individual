@@ -157,11 +157,103 @@
 
 /* -------------MANDAMENTOS---------------------------- */
 .mandamentos{
-  background-color: #000000;
+  background-image: url(../assets/brasoesempe1.jpg);
+  /* background-repeat: no-repeat; */
+  /* background-size: cover; */
   width: 100%;
-  height: 1000px;
+  height: 3000px;
 }
 
 .mandamentos .lista{
   width: 80%;
+}
+
+
+/* login ------------------------*/
+
+.login{
+  height: 100vh;
+  background-image: url('../assets/brasoespreto.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center ;
+  align-items: center;
+}
+
+.login .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  width: 100%;
+  background: transparent;
+
+}
+
+.login .container .card {
+  width: 50%;
+  height: 400px;
+  background-image: url("/public/assets/saojorge.jpg");
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  color: white;
+  flex-direction: column;
+  padding: 20px 0;
+} 
+.login .container .card h2{
+  font-family: var(--font-titulo);
+  background: transparent;
+}
+
+.formulario{
+  display: flex;
+  height: 90%;
+  width: 100%;
+  justify-content: space-around;
+  flex-direction: column;
+  background: transparent;
+}
+
+.formulario .campo{
+  display: flex ;
+  align-items: center;
+  background: transparent;
+  flex-direction: column;
+}
+.formulario span{
+  font-size: 15px;
+  font-weight: 400;
+  font-family: var(--font-corpo);
+  background: transparent;
+
+}
+
+.formulario input{
+  background: transparent;
+  font-family: var(--font-cori);
+  height: 35px;
+  width: 50%;
+}
+.formulario .botao{
+  background-color: wheat;
+  font-family: var(--font-corpo);
+  background-color: #c98c21;
+  height: 30px;
+  border-radius: 40px;
+  width: 60%;
+  align-self: center;
+}
+
+/* --------------------FOOTER---------------- */
+.footer{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+.footer .container{
+  color: #c98c21;
 }

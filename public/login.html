@@ -6,11 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AquaTech | Login</title>
+    <title>Login</title>
 
     <script src="./js/sessao.js"></script>
 
-    <link rel="stylesheet" href="./css/estilo.css">
+    <!-- <link rel="stylesheet" href="./css/estilo.css"> -->
+    <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="./assets/icon/favicon2.ico">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
@@ -19,36 +20,29 @@
 
     <!--Header-->
 
-    <div class="header">
-        <div class="container">
-            <h1 class="titulo">AquaTech</h1>
-            <ul class="navbar">
-                <li>
-                    <a href="index.html">Inicial</a>
-                </li>
-                <li>
-                    <a href="simulador.html">Simulador</a>
-                </li>
-                <li>|</li>
-                <li class="agora">
-                    <a href="#">Login</a>
-                </li>
-                <li>
-                    <a href="cadastro.html">Cadastro</a>
-                </li>
-            </ul>
+    <header class="header">
+        <div class="logo-container">
+            <img class="logo-header" src="assets/logo.jpg" alt="img_logo">
         </div>
-    </div>
+        <div class="links-container">
+            <a class="texto-header" href="index.html">home</a>
+            <p class="texto-header">|</p>
+           <strong> <a class="texto-header" href="login.html">Login</a></strong>
+            <p class="texto-header">|</p>
+            <a class="texto-header" href="cadastro.html">Cadastro</a>
+        </div>
 
+    </header>
+<!--  -->
 
     <div class="login">
-        <div class="alerta_erro">
+        <!-- <div class="alerta_erro">
             <div class="card_erro" id="cardErro">
                 <span id="mensagem_erro"></span>
             </div>
-        </div>
+        </div> -->
         <div class="container">
-            <div class="card card-login">
+            <div class="card">
                 <h2>Olá de volta!</h2>
                 <div class="formulario">
                     <div class="campo">
@@ -62,11 +56,11 @@
                     <button class="botao" onclick="entrar()">Entrar</button>
                 </div>
 
-                <div id="div_aguardar" class="loading-div">
+                <!-- <div id="div_aguardar" class="loading-div">
                     <img src="./assets/circle-loading.gif" id="loading-gif">
-                </div>
+                </div> -->
 
-                <div id="div_erros_login"></div>
+                <!-- <div id="div_erros_login"></div> -->
             </div>
         </div>
     </div>
