@@ -16,21 +16,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" />
 </head>
 
-<body onload="listar()">
+<body>
+  <!-- onload="listar()"> -->
   <!--header inicio-->
   <header class="header">
     <div class="logo-container">
-        <img class="logo-header" src="assets/logo.jpg" alt="img_logo">
+      <img class="logo-header" src="assets/logo.jpg" alt="img_logo">
     </div>
     <div class="links-container">
-        <a class="texto-header" href="index.html">home</a>
-        <p class="texto-header">|</p>
-        <a class="texto-header" href="login.html">Login</a>
-        <p class="texto-header">|</p>
-        <strong><a class="texto-header" href="cadastro.html">Cadastro</a></strong>
+      <a class="texto-header" href="index.html">home</a>
+      <p class="texto-header">|</p>
+      <a class="texto-header" href="login.html">Login</a>
+      <p class="texto-header">|</p>
+      <strong><a class="texto-header" href="cadastro.html">Cadastro</a></strong>
     </div>
 
-</header>
+  </header>
   <!--header fim-->
 
   <div class="login">
@@ -73,9 +74,9 @@
           </div>
           <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
-        <!-- <div id="div_aguardar" class="loading-div">
+        <div id="div_aguardar" class="loading-div">
           <img src="./assets/circle-loading.gif" id="loading-gif" />
-        </div> -->
+        </div>
 
         <div id="div_erros_login"></div>
       </div>
@@ -108,141 +109,78 @@
     var emailVar = email_input.value;
     var senhaVar = senha_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
-    var codigoVar = codigo_input.value;
-    var cpfVar = cpf_input.value;
-    var idEmpresaVincular;
 
-    if (/^[@][.]+$/.test(emailVar)) {
-      if (nomeVar.length > 1) {
-        if (senhaVar.length > 6) {
-          if (confirmacaoSenhaVar == senhaVar) {
-            if (cpfVar.length == 11) {
-              // Verificando se há algum campo em branco
-              if (
-                nomeVar == "" ||
-                emailVar == "" ||
-                senhaVar == "" ||
-                confirmacaoSenhaVar == "" ||
-                codigoVar == "" ||
-                cpfVar == ""
-              ) {
-                cardErro.style.display = "block";
-                mensagem_erro.innerHTML =
-                  "(Mensagem de erro para todos os campos em branco)";
 
-                finalizarAguardar();
-                return false;
-              } else {
-                setInterval(sumirMensagem, 5000);
-              }
+    
+     
+        if (confirmacaoSenhaVar == senhaVar) {
 
-              // Verificando se o código de ativação é de alguma empresa cadastrada
-              for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-                if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-                  idEmpresaVincular = listaEmpresasCadastradas[i].id;
-                  console.log("Código de ativação válido.");
-                  break;
-                } else {
-                  cardErro.style.display = "block";
-                  mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-                  finalizarAguardar();
-                }
-              }
-              // Enviando o valor da nova input
-              fetch("/usuarios/cadastrar", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  // crie um atributo que recebe o valor recuperado aqui
-                  // Agora vá para o arquivo routes/usuario.js
-                  nomeServer: nomeVar,
-                  emailServer: emailVar,
-                  cpfServer: cpfVar,
-                  senhaServer: senhaVar,
-                  idEmpresaVincularServer: idEmpresaVincular
-                }),
-              })
-                .then(function (resposta) {
-                  console.log("resposta: ", resposta);
-
-                  if (resposta.ok) {
-                    cardErro.style.display = "block";
-
-                    mensagem_erro.innerHTML =
-                      "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
-                    setTimeout(() => {
-                      window.location = "login.html";
-                    }, "2000");
-
-                    limparFormulario();
-                    finalizarAguardar();
-                  } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
-                  }
-                })
-                .catch(function (resposta) {
-                  console.log(`#ERRO: ${resposta}`);
-                  finalizarAguardar();
-                });
-
-              return false;
-            } else {
-              cardErro.style.display = "block";
-              mensagem_erro.innerHTML = 'cpf invalido';
-              finalizarAguardar();
-
-            }
-          } else {
+          // Verificando se há algum campo em branco
+          if (
+            nomeVar == "" ||
+            emailVar == "" ||
+            senhaVar == "" ||
+            confirmacaoSenhaVar == "" 
+          ) {
             cardErro.style.display = "block";
-            mensagem_erro.innerHTML = 'senhas diferentes';
-            finalizarAguardar();
+            mensagem_erro.innerHTML =
+              "(Mensagem de erro para todos os campos em branco)";
 
+            finalizarAguardar();
+            return false;
+          } else {
+            setInterval(sumirMensagem, 5000);
           }
+
+         
+          // Enviando o valor da nova input
+          fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              // crie um atributo que recebe o valor recuperado aqui
+              // Agora vá para o arquivo routes/usuario.js
+              nomeServer: nomeVar,
+              emailServer: emailVar,
+              senhaServer: senhaVar
+            }),
+          })
+            .then(function (resposta) {
+              console.log("resposta: ", resposta);
+
+              if (resposta.ok) {
+                cardErro.style.display = "block";
+
+                mensagem_erro.innerHTML =
+                  "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                setTimeout(() => {
+                  window.location = "login.html";
+                }, "2000");
+
+                limparFormulario();
+                finalizarAguardar();
+              } else {
+                throw "Houve um erro ao tentar realizar o cadastro!";
+              }
+            })
+            .catch(function (resposta) {
+              console.log(`#ERRO: ${resposta}`);
+              finalizarAguardar();
+            });
+
+          return false;
         } else {
           cardErro.style.display = "block";
-          mensagem_erro.innerHTML = 'senha muito pequena';
+          mensagem_erro.innerHTML = 'senhas diferentes';
           finalizarAguardar();
 
         }
-      } else {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = 'nome com campo invalido';
-        finalizarAguardar();
-
-      }
-    } else {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML = 'campo email precisa conter "@" e "."';
-      finalizarAguardar();
-
-    }
-
 
   }
 
-
-  // Listando empresas cadastradas 
-  function listar() {
-    fetch("/empresas/listar", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((empresas) => {
-          empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
-
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-          });
-        });
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-  }
 
   function sumirMensagem() {
     cardErro.style.display = "none";
