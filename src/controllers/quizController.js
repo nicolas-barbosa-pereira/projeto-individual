@@ -26,7 +26,6 @@ function cadastrarQuiz(req,res){
 }
 
 function registrarPontuacao(req, res) {
-    console.log("BODY DA REQUISIÇÃO:", req.body);
 
     var idUsuario = req.body.idUsuario;
     var idQuiz = req.body.idQuiz;
@@ -50,7 +49,8 @@ function registrarPontuacao(req, res) {
 
 
 
-function obterRankingGeral(req, res) {
+function obterRankingGeral(req,res) {
+
     quizModel.obterRankingGeral()
         .then(function (resultado) {
             res.send(resultado);
@@ -62,10 +62,47 @@ function obterRankingGeral(req, res) {
 }
 
 
+function obterTentativas(req,res){
+    let fkquiz = req.body.fkquiz;
+
+    if (fkquiz === undefined) {
+        res.status(400).send("Dados necessários não fornecidos");
+        return;
+    }
+
+    quizModel.obterTentativas(fkquiz)
+    .then(function(resultado){
+        res.send(resultado);
+    }).catch(function(erro){
+        console.log(erro)
+        res.status(500).send("Erro ao obter as tentivas")
+    })
+
+
+}
+
+function obterRankingQuiz(req,res){
+    let fkquiz= req.body.fkquiz;
+
+    if(fkquiz === undefined){
+        res.status(400).send("dados invalidos");
+        return;
+    }
+
+    quizModel.obterRankingQuiz(fkquiz)
+    .then(function(resultado){
+        res.send(resultado)
+    }).catch(function(erro){
+        res.status(500).send("Erro ao obter ranking quiz")
+    })
+
+}
+
+
 module.exports ={
     cadastrarQuiz,
     registrarPontuacao,
-    obterRankingGeral
-
-
+    obterRankingGeral,
+    obterRankingQuiz,
+    obterTentativas
 }

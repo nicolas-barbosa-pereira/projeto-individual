@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="quiz-container">
+    <section class="container-quiz">
         <div class="questao" id="questao"></div>
         <ul class="alternativas" id="alternativas">
             <li><button onclick="valida(0)">A</button></li>
@@ -19,16 +19,18 @@
         </ul>
         <div class="score" id="score"></div>
         <div id="dashboardButtonContainer"></div>
-    </div>
+    </section>
 
 
 </body>
 
 </html>
 <script>
-    const perguntas = ['cassio'];
-    const alternativas = [['','','','certa']];
-    const iscorrect = [3];
+    const perguntas = ['cassio','pergunta 2'];
+    const alternativas = [
+        ['errada','errada2','errada3','certa'],
+        ['errada    ','e','l','ceerta']];
+    const iscorrect = [3,2];
 
     let pergunta = 0;
     let pontos = 0;
@@ -36,8 +38,8 @@
 
     function pegaPergunta() {
         document.getElementById('questao').innerHTML = perguntas[pergunta];
-        var opcoes = document.getElementById('alternativas').getElementsByTagName('button');
-        for (var i = 0; i < alternativas.length; i++) {
+        const opcoes = document.getElementById('alternativas').getElementsByTagName('button');
+        for (let i = 0; i < alternativas[pergunta].length; i++) {
             opcoes[i].innerHTML = alternativas[pergunta][i];
             opcoes[i].classList.remove('correct', 'incorrect');
         }
@@ -61,7 +63,7 @@
             }else{
                 finalizaquiz();
             }
-        })
+        }, 1000)
     }
 
 // "/pontuacao" rota para usar no meu fetch
@@ -96,5 +98,5 @@
         console.error("Erro:", error);
     });
 }
-
+window.onload = pegaPergunta()
 </script>

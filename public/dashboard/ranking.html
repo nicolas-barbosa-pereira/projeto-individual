@@ -2,80 +2,80 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Tempo Real</title>
+  <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaTech | Tempo Real</title>
 
 
-    <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/estilo.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="./../css/dashboards.css">
+  <link rel="stylesheet" href="./../css/estilo.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script src="../js/sessao.js"></script>
-    <script src="../js/alerta.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+  <script src="../js/sessao.js"></script>
+  <script src="../js/alerta.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
 </head>
 <style>
-    #rankingChart {
-  background-color: #ffffff;
-  border-radius: 10px;
-  padding: 10px;
-}
-
+  #rankingChart {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+  }
 </style>
 
 <body onload="validarSessao()">
 
-    <div class="janela">
+  <div class="janela">
 
-        <div class="header-left dash-header">
+    <div class="header-left dash-header">
 
-            <h1>AquaTech</h1>
+      <h1>AquaTech</h1>
 
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-            </div>
+      <div class="hello">
+        <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+      </div>
 
-            <div class="btn-nav">
-                <h3>Ranking</h3>
-            </div>
+      <div class="btn-nav">
+        <h3>Ranking</h3>
+      </div>
 
-            <div class="btn-nav-white">
-                <a href="./dashboard.html">
-                    <h3>Quiz</h3>
-                </a>
-            </div>
+      <div class="btn-nav-white">
+        <a href="./dashboard.html">
+          <h3>Quiz</h3>
+        </a>
+      </div>
 
-            <div class="btn-nav-white">
-                <a href="./mural.html">
-                    <h3>Mural de Avisos</h3>
-                </a>
-            </div>
+      <div class="btn-nav-white">
+        <a href="./mural.html">
+          <h3>Mural de Avisos</h3>
+        </a>
+      </div>
 
-            <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
-            </div>
-
-         </div>
-        
-
-         <div class="dash">
-            <div id="alerta">
-            </div>
-            <canvas id="rankingChart" width="200" height="100"></canvas>
-
-
-            </div>
-
-          
-        </div>
+      <div class="btn-logout" onclick="limparSessao()">
+        <h3>Sair</h3>
+      </div>
 
     </div>
+  </div>
+  </div>
+
+  <div class="dash">
+    <div>
+    </div>
+    <canvas id="rankingChart" width="200" height="100"></canvas>
+    <canvas id="rankingQuiz"></canvas>
+    <canvas id="tentativas" width="200px" height="100px"></canvas>
+
+  </div>
+
+
+
+  </div>
 
 </body>
 
@@ -86,10 +86,10 @@
   const rankingChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Ana', 'Bruno', 'Carlos', 'Débora', 'Eduardo'], 
+      labels: ['Ana', 'Bruno', 'Carlos', 'Débora', 'Eduardo'],
       datasets: [{
         label: 'Pontuação',
-        data: [95, 89, 76, 65, 50], 
+        data: [95, 89, 76, 65, 50],
         borderRadius: 5
       }]
     },
@@ -111,23 +111,66 @@
   });
 
 
-    function exibirAquarios() {
-        JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
-            document.getElementById("cardAquarios").innerHTML += `
-                    <div class="card-aquario">
-                        <div class="title-aquario">
-                            <h1>${item.descricao}</h1>
-                        </div>
-                        <div class="desc-aquario">
-                        <div class="temperatura">
-                            <p id="temp_aquario_${item.id}">-°C</p>
-                        </div>
-                        <div class="cor-alerta" id="card_${item.id}"></div>
-                    </div>
-                    </div>
-                    `
-        });
+const ctx2 = document.getElementById('rankingQuiz').getContext('2d');
+  const rankingQuiz = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['Ana', 'Bruno', 'Carlos', 'Débora', 'Eduardo'],
+      datasets: [{
+        label: 'Pontuação',
+        data: [95, 89, 76, 65, 50],
+        borderRadius: 5
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Ranking de Pontuação'
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true
+        }
+      }
     }
+  });
+
+  const ctx3 = document.getElementById('tentativas').getContext('2d');
+const tentativas = new Chart(ctx3, {
+  type: 'pie', // corrigido
+  data: {
+    labels: ['Ana', 'Bruno', 'Carlos', 'Débora', 'Eduardo'],
+    datasets: [{
+      data: [95, 89, 76, 65, 50],
+      backgroundColor: [
+        '#4caf50',
+        '#2196f3',
+        '#ff9800',
+        '#e91e63',
+        '#9c27b0'
+      ],
+      borderRadius: 5
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: true },
+      title: {
+        display: true,
+        text: 'Ranking de Pontuação'
+      }
+    }
+  }
+});
+
+
+
+
 
 </script>
 
