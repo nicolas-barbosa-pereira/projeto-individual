@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script src="../js/sessao.js"></script>
     <script src="../js/alerta.js"></script>
@@ -19,6 +20,14 @@
         href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 </head>
+<style>
+    #rankingChart {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+</style>
 
 <body onload="validarSessao()">
 
@@ -33,12 +42,12 @@
             </div>
 
             <div class="btn-nav">
-                <h3>Aquários</h3>
+                <h3>Ranking</h3>
             </div>
 
             <div class="btn-nav-white">
                 <a href="./dashboard.html">
-                    <h3>Gráficos</h3>
+                    <h3>Quiz</h3>
                 </a>
             </div>
 
@@ -52,43 +61,18 @@
                 <h3>Sair</h3>
             </div>
 
-        </div>
+         </div>
+        
 
-        <div class="dash">
+         <div class="dash">
             <div id="alerta">
             </div>
-            <div class="area-parametros-alerta">
-                <p class="titulo-legenda">
-                    Legenda - Parâmetros para Alertas
-                </p>
-                <div class="parametros-alerta">
-                    <div class="item-regua perigo-frio">
-                        <p>Perigo</p>
-                        <p>&lt;=5°C</p>
-                    </div>
-                    <div class="item-regua alerta-frio">
-                        <p>Alerta</p>
-                        <p>&lt;=10°C</p>
-                    </div>
-                    <div class="item-regua ideal">
-                        <p>Ideal</p>
-                        <p>20°C</p>
-                    </div>
-                    <div class="item-regua alerta-quente">
-                        <p>Alerta</p>
-                        <p>&gt;=22°C</p>
-                    </div>
-                    <div class="item-regua perigo-quente">
-                        <p>Perigo</p>
-                        <p>&gt;=23°C</p>
-                    </div>
-                </div>
-            </div>
+            <canvas id="rankingChart" width="200" height="100"></canvas>
 
-            <div class="cards" id="cardAquarios">
 
             </div>
 
+          
         </div>
 
     </div>
@@ -96,6 +80,36 @@
 </body>
 
 <script>
+
+
+  const ctx = document.getElementById('rankingChart').getContext('2d');
+  const rankingChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Ana', 'Bruno', 'Carlos', 'Débora', 'Eduardo'], 
+      datasets: [{
+        label: 'Pontuação',
+        data: [95, 89, 76, 65, 50], 
+        borderRadius: 5
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Ranking de Pontuação'
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
 
     function exibirAquarios() {
         JSON.parse(sessionStorage.AQUARIOS).forEach(item => {

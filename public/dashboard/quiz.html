@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width='device-width', initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/dashboards.css">
+</head>
+
+<body>
+    <div class="quiz-container">
+        <div class="questao" id="questao"></div>
+        <ul class="alternativas" id="alternativas">
+            <li><button onclick="valida(0)">A</button></li>
+            <li><button onclick="valida(1)">B</button></li>
+            <li><button onclick="valida(2)">C</button></li>
+            <li><button onclick="valida(3)">D</button></li>
+        </ul>
+        <div class="score" id="score"></div>
+        <div id="dashboardButtonContainer"></div>
+    </div>
+
+
+</body>
+
+</html>
+<script>
+    const perguntas = ['cassio'];
+    const alternativas = [['','','','certa']];
+    const iscorrect = [3];
+
+    let pergunta = 0;
+    let pontos = 0;
+
+
+    function pegaPergunta() {
+        document.getElementById('questao').innerHTML = perguntas[pergunta];
+        var opcoes = document.getElementById('alternativas').getElementsByTagName('button');
+        for (var i = 0; i < alternativas.length; i++) {
+            opcoes[i].innerHTML = alternativas[pergunta][i];
+            opcoes[i].classList.remove('correct', 'incorrect');
+        }
+    }
+
+    function valida(marcada) {
+        let resposta = document.getElementById('alternativas').getElementsByTagName('button');
+
+        if (marcada === iscorrect[pergunta]) {
+            resposta[marcada].classList.add('correct');
+            pontos++;
+        } else {
+            resposta[marcada].classList.add('incorrect');
+            resposta[iscorrect[pergunta]].classList.add('correct');
+        }
+        pergunta++
+
+        setTimeout(function(){
+            if(pergunta < perguntas.length){
+                pegaPergunta();
+            }else{
+                finalizaquiz();
+            }
+        })
+    }
+
+// "/pontuacao" rota para usar no meu fetch
+    function finalizaquiz() {
+    const fkquiz = 1;
+    const fkusuario = sessionStorage.ID_USUARIO; 
+    const tentativas = 1;
+
+    fetch("/quiz/pontuacao", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idQuiz: fkquiz,
+            pontos: pontos,
+            tentativas: tentativas,
+            idUsuario: fkusuario
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Erro ao registrar pontuação");
+        }
+        return response.text();
+    })
+    .then(data => {
+        console.log("Pontuação registrada:", data);
+        // você pode redirecionar ou exibir algo aqui
+    })
+    .catch(error => {
+        console.error("Erro:", error);
+    });
+}
+
+</script>
