@@ -63,7 +63,7 @@ function obterRankingGeral(req,res) {
 
 
 function obterTentativas(req,res){
-    let fkquiz = req.body.fkquiz;
+    let fkquiz = req.params.fkquiz;
 
     if (fkquiz === undefined) {
         res.status(400).send("Dados necessários não fornecidos");
@@ -82,7 +82,7 @@ function obterTentativas(req,res){
 }
 
 function obterRankingQuiz(req,res){
-    let fkquiz= req.body.fkquiz;
+    let fkquiz= req.params.fkquiz;
 
     if(fkquiz === undefined){
         res.status(400).send("dados invalidos");
@@ -98,11 +98,20 @@ function obterRankingQuiz(req,res){
 
 }
 
+function listarQuizzes(req, res) {
+    quizModel.listarQuizzes()
+        .then(result => res.json(result))
+        .catch(err => {
+            console.error(err);
+            res.status(500).send("Erro ao listar quizzes");
+        });
+}
 
 module.exports ={
     cadastrarQuiz,
     registrarPontuacao,
     obterRankingGeral,
     obterRankingQuiz,
-    obterTentativas
+    obterTentativas,
+    listarQuizzes
 }

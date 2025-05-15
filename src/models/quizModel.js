@@ -20,10 +20,10 @@ function attPontuacao(fkquiz,fkusuario,pontos,tentativas){
 }
 function obterRankingQuiz(fkquiz){
     var instrucaoSql=`
-    SELECT 
+        SELECT 
             u.nome,
             SUM(p.pontos) AS total_pontos,
-            COUNT(p.id) AS total_tentativas
+            COUNT(p.idpontuacao) AS total_tentativas
         FROM pontuacao p
         INNER JOIN usuario u ON p.fkusuario = u.idusuario
         WHERE fkquiz = ${fkquiz}
@@ -40,7 +40,7 @@ function obterRankingGeral() {
         SELECT 
             u.nome,
             SUM(p.pontos) AS total_pontos,
-            COUNT(p.id) AS total_tentativas
+            COUNT(p.idpontuacao) AS total_tentativas
         FROM pontuacao p
         INNER JOIN usuario u ON p.fkusuario = u.idusuario
         GROUP BY u.nome
@@ -54,12 +54,23 @@ function obterRankingGeral() {
 function obterTentativas(idQuiz) {
     var instrucaoSql = `
         SELECT 
+            u.nome,
             SUM(p.tentativas) AS totalTentativas
         FROM pontuacao p
-        WHERE p.fkquiz = ${idQuiz};
+        INNER JOIN usuario u ON p.fkusuario = u.idusuario
+        WHERE p.fkquiz = ${idQuiz}
+        GROUP BY u.nome;
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
+function listarQuizzes() {
+    const instrucaoSql = `
+        SELECT idquiz AS id, tema FROM quiz;
+    `;
     return database.executar(instrucaoSql);
 }
 
@@ -69,5 +80,6 @@ module.exports ={
     attPontuacao,
     obterRankingGeral,
     obterTentativas,
-    obterRankingQuiz
+    obterRankingQuiz,
+    listarQuizzes
 }
