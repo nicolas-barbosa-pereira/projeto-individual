@@ -120,73 +120,77 @@
 <script>
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   console.log(sessionStorage.ID_USUARIO);
-      const ctx = document.getElementById("graficoRankingGeral").getContext("2d");
+  const ctx = document.getElementById("graficoRankingGeral").getContext("2d");
+  const grafico1=null
+  function obterRankingGeral() {
+    fetch(`/quiz/ranking/geral`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.length === 0) {
+          alert("não possui dados para a dashboard");
+          return;
+        }
 
- function obterRankingGeral() {
-  fetch(`/quiz/ranking/geral`)
-    .then(res => res.json())
-    .then(data => {
-      if (data.length === 0) {
-        alert("não possui dados para a dashboard");
-        return;
-      }
+        const pontos = data.map(item => item.total_pontos);
+        const nomes = data.map(item => item.nome);
+       
+        if (grafico1 !== null) {
+          grafico1.destroy();
+        }
 
-      const pontos = data.map(item => item.total_pontos);
-      const nomes = data.map(item => item.nome);
-
-
-      const grafico1 = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: nomes,
-          datasets: [
-            {
-              label: "Pontuação",
-              data: pontos,
-              backgroundColor: 'rgba(0, 255, 0, 0.2)',
-              borderColor: '#00d704',
-              borderWidth: 2
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            x: {
-              ticks: {
-                color: 'white'
+         grafico1 = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: nomes,
+            datasets: [
+              {
+                label: "Pontuação",
+                data: pontos,
+                backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                borderColor: '#00d704',
+                borderWidth: 2
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                ticks: {
+                  color: 'white'
+                },
+                grid: {
+                  color: 'rgba(255, 255, 255, 0.2)'
+                }
               },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)'
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  color: 'white'
+                },
+                grid: {
+                  color: 'rgba(255, 255, 255, 0.2)'
+                }
               }
             },
-            y: {
-              beginAtZero: true,
-              ticks: {
-                color: 'white'
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)'
-              }
-            }
-          },
-          plugins: {
-            legend: {
-              labels: {
-                color: 'white'
+            plugins: {
+              legend: {
+                labels: {
+                  color: 'white'
+                }
               }
             }
           }
-        }
+        });
+        setTimeout(obterRankingGeral, 10000);
+      })
+      .catch(err => {
+        console.error("Erro ao obter ranking geral:", err);
       });
-    })
-    .catch(err => {
-      console.error("Erro ao obter ranking geral:", err);
-    });
-}
+  }
 
 
- window.onload = () => {
-            obterRankingGeral();
-        };
+  window.onload = () => {
+    obterRankingGeral();
+  };
 </script>
