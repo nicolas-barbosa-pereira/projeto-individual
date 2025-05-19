@@ -95,7 +95,7 @@
       </div>
 
       <h2>Selecionar Quiz</h2>
-      <select id="selectQuiz" onchange="atualizarGraficosQuiz()">
+      <select id="selectQuiz" onchange="obterRankingQuiz()">
         <option value="">Selecione um quiz</option>
       </select>
 
@@ -121,7 +121,9 @@
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   console.log(sessionStorage.ID_USUARIO);
   const ctx = document.getElementById("graficoRankingGeral").getContext("2d");
-  const grafico1 = null
+  const ctx2 =document.getElementById("graficoRankingQuiz").getContext("2d")
+  let grafico1 = null
+  // let grafico2=null
 
   function obterRankingGeral() {
     fetch(`/quiz/ranking/geral`, {
@@ -194,6 +196,78 @@
         console.error("Erro ao obter ranking geral:", err);
       });
   }
+
+  function obterRankingQuiz(){
+    let opcao =selectQuiz.value;
+
+    fetch(`/quiz/ranking/quiz/  ${opcao}`,{
+        method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => res.json())
+    .then(data=>{
+      if (data.length === 0) {
+          alert("não possui dados para a dashboard");
+          return;
+        }  const pontos = data.map(item => item.total_pontos);
+        const nomes = data.map(item => item.nome);
+
+        
+
+        const grafico2 = new Chart(ctx2, {
+          type: "bar",
+          data: {
+            labels: nomes,
+            datasets: [
+              {
+                label: "Pontuação",
+                data: pontos,
+                backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                borderColor: '#00d704',
+                borderWidth: 2
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                ticks: {
+                  color: 'white'
+                },
+                grid: {
+                  color: 'rgba(255, 255, 255, 0.2)'
+                }
+              },
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  color: 'white'
+                },
+                grid: {
+                  color: 'rgba(255, 255, 255, 0.2)'
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  color: 'white'
+                }
+              }
+            }
+          }
+        });
+        setTimeout(obterRankingGeral, 10000);
+      })
+      .catch(err => {
+        console.error("Erro ao obter ranking geral:", err);
+      });
+  }
+
+
 
 
   window.onload = () => {
