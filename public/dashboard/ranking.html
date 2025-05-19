@@ -36,7 +36,7 @@
   }
 
   canvas {
-    background-color: white;
+    background-color: rgb(99, 96, 96);
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 40px;
@@ -90,27 +90,21 @@
       <h2>Ranking Geral</h2>
       <div class="chart-container">
         <canvas id="graficoRankingGeral"></canvas>
-        <div id="loadingRankingGeral" class="loading">Carregando dados...</div>
-        <div id="noDataRankingGeral" class="no-data" style="display: none;">Nenhum dado disponível no momento.</div>
       </div>
 
       <h2>Selecionar Quiz</h2>
-      <select id="selectQuiz" onchange="obterRankingQuiz()">
+      <select id="selectQuiz" onchange="carregagrafico()">
         <option value="">Selecione um quiz</option>
       </select>
 
       <h2>Ranking do Quiz Selecionado</h2>
       <div class="chart-container">
         <canvas id="graficoRankingQuiz"></canvas>
-        <div id="loadingRankingQuiz" class="loading" style="display: none;">Carregando dados...</div>
-        <div id="noDataRankingQuiz" class="no-data">Selecione um quiz para visualizar o ranking.</div>
       </div>
 
       <h2>Total de Tentativas</h2>
       <div class="chart-container">
         <canvas id="graficoTentativas"></canvas>
-        <div id="loadingTentativas" class="loading" style="display: none;">Carregando dados...</div>
-        <div id="noDataTentativas" class="no-data">Selecione um quiz para visualizar as tentativas.</div>
       </div>
     </section>
   </div>
@@ -121,9 +115,11 @@
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   console.log(sessionStorage.ID_USUARIO);
   const ctx = document.getElementById("graficoRankingGeral").getContext("2d");
-  const ctx2 =document.getElementById("graficoRankingQuiz").getContext("2d")
+  const ctx2 = document.getElementById("graficoRankingQuiz").getContext("2d")
+  const ctx3 = document.getElementById("graficoTentativas").getContext("2d");
   let grafico1 = null
-  // let grafico2=null
+  let grafico2 = null
+  let grafico3 = null
 
   function obterRankingGeral() {
     fetch(`/quiz/ranking/geral`, {
@@ -190,33 +186,38 @@
             }
           }
         });
-        setTimeout(obterRankingGeral, 10000);
+        setTimeout(obterRankingGeral, 10000000);
       })
       .catch(err => {
         console.error("Erro ao obter ranking geral:", err);
       });
   }
 
-  function obterRankingQuiz(){
-    let opcao =selectQuiz.value;
+  function obterRankingQuiz() {
+    let opcao = selectQuiz.value;
 
-    fetch(`/quiz/ranking/quiz/  ${opcao}`,{
-        method: "GET",
+    fetch(`/quiz/ranking/quiz/${opcao}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json"
       }
     })
-    .then(res => res.json())
-    .then(data=>{
-      if (data.length === 0) {
+      .then(res => res.json())
+      .then(data => {
+        if (data.length === 0) {
           alert("não possui dados para a dashboard");
           return;
-        }  const pontos = data.map(item => item.total_pontos);
+        }
+
+        const pontos = data.map(item => item.total_pontos);
         const nomes = data.map(item => item.nome);
 
-        
+        if (grafico2 !== null) {
+          grafico2.destroy();
+        }
 
-        const grafico2 = new Chart(ctx2, {
+
+        grafico2 = new Chart(ctx2, {
           type: "bar",
           data: {
             labels: nomes,
@@ -267,7 +268,65 @@
       });
   }
 
+  function obterTentativas() {
+    let opcao = selectQuiz.value;
+    fetch(`/quiz/ranking/tentativas/${opcao}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.length === 0) {
+          alert("não possui dados para a dashboard");
+          return;
+        }
 
+
+        const tentativas = data.map(i => i.totalTentativas);
+        const nomes = data.map(i => i.nome);
+
+        if (grafico3 !== null) {
+          grafico3.destroy();
+        }
+        grafico3 = new Chart(ctx3, {
+          type: "pie",
+          data: {
+            labels: nomes,
+            datasets: [
+              {
+                label: "tentativas",
+                data: tentativas,
+                backgroundColor:
+                  'rgba(255, 99, 132, 0.6)',
+                borderColor: 
+                  'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+              }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  color: 'white '
+                }
+              }
+            }
+          }
+        });
+      })
+      .catch(err => {
+        console.error("Erro ao obter as tentivas:", err);
+      });
+  }
+
+  function carregagrafico() {
+    obterRankingQuiz(),
+      obterTentativas()
+  }
 
 
   window.onload = () => {
@@ -289,6 +348,8 @@
         }
       })
     obterRankingGeral();
+
+
   };
 
 </script>
