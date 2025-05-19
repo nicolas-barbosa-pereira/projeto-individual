@@ -121,9 +121,15 @@
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   console.log(sessionStorage.ID_USUARIO);
   const ctx = document.getElementById("graficoRankingGeral").getContext("2d");
-  const grafico1=null
+  const grafico1 = null
+
   function obterRankingGeral() {
-    fetch(`/quiz/ranking/geral`)
+    fetch(`/quiz/ranking/geral`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
       .then(res => res.json())
       .then(data => {
         if (data.length === 0) {
@@ -133,12 +139,12 @@
 
         const pontos = data.map(item => item.total_pontos);
         const nomes = data.map(item => item.nome);
-       
+
         if (grafico1 !== null) {
           grafico1.destroy();
         }
 
-         grafico1 = new Chart(ctx, {
+        grafico1 = new Chart(ctx, {
           type: "bar",
           data: {
             labels: nomes,
@@ -191,6 +197,24 @@
 
 
   window.onload = () => {
+    fetch('/quiz/ranking', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => res.json())
+      .then(data => {
+        const selectdoquiz = document.getElementById("selectQuiz");
+        for (let i = 0; i < data.length; i++) {
+          //armazeno apenas o item da posição i na variavel quiz que vem da variavel data que tem todo o json
+          const quiz = data[i];
+          const option = document.createElement("option");
+          option.value = quiz.id;
+          option.textContent = quiz.tema;
+          selectdoquiz.appendChild(option);
+        }
+      })
     obterRankingGeral();
   };
+
 </script>
