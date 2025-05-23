@@ -26,11 +26,11 @@
 
 </html>
 <script>
-    const perguntas = ['cassio','pergunta 2'];
+    const perguntas = ['cassio', 'pergunta 2'];
     const alternativas = [
-        ['errada','errada2','errada3','certa'],
-        ['errada    ','e','l','ceerta']];
-    const iscorrect = [3,2];
+        ['errada', 'errada2', 'errada3', 'certa'],
+        ['errada    ', 'e', 'l', 'ceerta']];
+    const iscorrect = [3, 2];
 
     let pergunta = 0;
     let pontos = 0;
@@ -48,6 +48,10 @@
     function valida(marcada) {
         let resposta = document.getElementById('alternativas').getElementsByTagName('button');
 
+        for (let i = 0; i < resposta.length; i++) {
+            resposta[i].disabled = true;
+        }
+
         if (marcada === iscorrect[pergunta]) {
             resposta[marcada].classList.add('correct');
             pontos++;
@@ -57,46 +61,48 @@
         }
         pergunta++
 
-        setTimeout(function(){
-            if(pergunta < perguntas.length){
+        setTimeout(function () {
+            if (pergunta < perguntas.length) {
                 pegaPergunta();
-            }else{
+                for (let i = 0; i < resposta.length; i++) {
+                    resposta[i].disabled = false;
+                }
+            } else {
                 finalizaquiz();
             }
         }, 1000)
     }
 
-// "/pontuacao" rota para usar no meu fetch
+    // "/pontuacao" rota para usar no meu fetch
     function finalizaquiz() {
-    const fkquiz = 1;
-    const fkusuario = sessionStorage.ID_USUARIO; 
-    const tentativas = 1;
+        const fkquiz = 1;
+        const fkusuario = sessionStorage.ID_USUARIO;
+        const tentativas = 1;
 
-    fetch("/quiz/pontuacao", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            idQuiz: fkquiz,
-            pontos: pontos,
-            tentativas: tentativas,
-            idUsuario: fkusuario
+        fetch("/quiz/pontuacao", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idQuiz: fkquiz,
+                pontos: pontos,
+                tentativas: tentativas,
+                idUsuario: fkusuario
+            })
         })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Erro ao registrar pontuação");
-        }
-        return response.text();
-    })
-    .then(data => {
-        console.log("Pontuação registrada:", data);
-        // você pode redirecionar ou exibir algo aqui
-    })
-    .catch(error => {
-        console.error("Erro:", error);
-    });
-}
-window.onload = pegaPergunta()
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erro ao registrar pontuação");
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log("Pontuação registrada:", data);
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+            });
+    }
+    window.onload = pegaPergunta()
 </script>
