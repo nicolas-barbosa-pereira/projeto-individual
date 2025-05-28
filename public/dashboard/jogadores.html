@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+    <canvas id="grafico"></canvas>
+    
+</body>
+</html>
+<script>
+    const ctx = document.getElementById("grafico").getContext("2d");
+let grafico1 = null;
+
+window.onload = () => {
+    fetch('/usuarios/jogadores', {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.length === 0) {
+            alert("Não possui dados para o gráfico");
+            return;
+        }
+
+        // Extrai nomes e votos
+        const nomes = data.map(i => i.jogadorFav);
+        const votos = data.map(i => i.votos);
+
+        if (grafico1 !== null) {
+            grafico1.destroy();
+        }
+
+        grafico1 = new Chart(ctx, {
+            type: "bar", // ou "pie"
+            data: {
+                labels: nomes,
+                datasets: [{
+                    label: "Votos por jogador",
+                    data: votos,
+                    backgroundColor: [
+                        "rgba(255, 99, 132, 0.6)",
+                        "rgba(54, 162, 235, 0.6)",
+                        "rgba(255, 206, 86, 0.6)",
+                        "rgba(75, 192, 192, 0.6)",
+                        "rgba(153, 102, 255, 0.6)"
+                    ],
+                    borderColor: "white",
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    })
+    .catch(err => {
+        console.error("Erro ao obter os dados dos jogadores favoritos:", err);
+    });
+};
+
+</script>
