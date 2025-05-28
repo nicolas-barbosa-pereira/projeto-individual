@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width='device-width', initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../css/quiz.css">
     <link rel="stylesheet" href="../css/dashboards.css">
+
 </head>
 
 <body>
     <section class="container-quiz">
+        <div id="numeroQuestao"></div>
         <div class="questao" id="questao"></div>
         <ul class="alternativas" id="alternativas">
             <li><button onclick="valida(0)">A</button></li>
@@ -26,9 +29,9 @@
 
 </html>
 <script>
-    const perguntas = ['cassio', 'pergunta 2'];
+    const perguntas = ['Por que o cássio é frango?', 'pergunta 2'];
     const alternativas = [
-        ['errada', 'errada2', 'errada3', 'certa'],
+        ['Com fé no pé', 'Gabi--Gol', 'Arrascaeta', 'Todos'],
         ['errada    ', 'e', 'l', 'ceerta']];
     const iscorrect = [3, 2];
 
@@ -38,6 +41,7 @@
 
     function pegaPergunta() {
         document.getElementById('questao').innerHTML = perguntas[pergunta];
+            document.getElementById('numeroQuestao').innerHTML = `${pergunta + 1}`;
         const opcoes = document.getElementById('alternativas').getElementsByTagName('button');
         for (let i = 0; i < alternativas[pergunta].length; i++) {
             opcoes[i].innerHTML = alternativas[pergunta][i];

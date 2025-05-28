@@ -245,6 +245,11 @@
   background: transparent;
   flex-direction: column;
 }
+.formulario .campo input{
+  border-radius: 12px;
+  padding: 8px;
+  color: white;
+}
 .formulario span{
   font-size: 15px;
   font-weight: 400;
