@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data:;">
 
-  <title>AquaTech | Dashboards</title>
+  <title>NIKO | Dashboards</title>
 
 
   <link rel="stylesheet" href="./../css/dashboards.css">
-  <link rel="stylesheet" href="./../css/estilo.css" />
+  <link rel="stylesheet" href="./../css/ranking.css" />
 
   <script src="../js/sessao.js"></script>
   <script src="./../js/alerta.js"></script>
@@ -56,7 +56,7 @@
 
   <div class="janela">
     <div class="header-left">
-      <h1>AquaTech</h1>
+      <h1>N I K O</h1>
 
       <div class="hello">
         <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
@@ -74,11 +74,7 @@
         </a>
       </div>
 
-      <div class="btn-nav-white">
-        <a href="./mural.html">
-          <h3>Mural de Avisos</h3>
-        </a>
-      </div>
+
       <div class="btn-nav-white">
         <a href="jogadores.html">
           <h3>Jogadores</h3>
@@ -92,25 +88,42 @@
     </div>
 
     <section class="dash">
-      <div id="div_top1"></div>
-      <h2>Ranking Geral</h2>
-      <div class="chart-container">
-        <canvas id="graficoRankingGeral"></canvas>
+      <div id="divGeralGraficoUm">
+        <div class="chart-container" id="graficoUm">
+          <h2 style="align-self: flex-start;">Ranking Geral</h2>
+
+          <canvas id="graficoRankingGeral"></canvas>
+        </div>
+        <div id="div_top1">
+          <p id="p_top1">NIKÉ</p>
+        </div>
+
       </div>
 
-      <h2>Selecionar Quiz</h2>
-      <select id="selectQuiz" onchange="carregagrafico()">
-        <option value="">Selecione um quiz</option>
-      </select>
-
-      <h2>Ranking do Quiz Selecionado</h2>
-      <div class="chart-container">
-        <canvas id="graficoRankingQuiz"></canvas>
+      <div id="selectsGraficos">
+        <h2>Selecionar Quiz</h2>
+        <select id="selectQuiz" onchange="carregagrafico()">
+          <option value="">Selecione um quiz</option>
+        </select>
       </div>
 
-      <h2>Total de Tentativas</h2>
-      <div class="chart-container">
-        <canvas id="graficoTentativas"></canvas>
+      <div class="divGeralGraficoDuplo">
+        
+
+        <div class="divGeralGraficoDois">
+
+
+          <h2>Ranking do Quiz Selecionado</h2>
+          <div class="chart-container" id="graficoDois">
+            <canvas id="graficoRankingQuiz" style="border-radius: 12px;"></canvas>
+          </div>
+        </div>
+        <div class="divGeralGraficoTres">
+          <h2>Total de Tentativas</h2>
+          <div class="chart-container" id="graficoTres">
+            <canvas id="graficoTentativas" style="border-radius: 12px;"></canvas>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -127,24 +140,24 @@
   let grafico2 = null
   let grafico3 = null
 
-  function top1(){
-    fetch('/quiz/top1',{
-       method: "GET",
+  function top1() {
+    fetch('/quiz/top1', {
+      method: "GET",
       headers: {
         "Content-Type": "application/json"
       }
     })
-    .then(res => res.json())
-    .then(data=>{
+      .then(res => res.json())
+      .then(data => {
         if (data.length === 0) {
           alert("não possui dados para a dashboard");
           return;
         }
 
-        const top1=data.map(i=>i.nome)
+        const top1 = data.map(i => i.nome)
 
-        div_top1.innerHTML=`${top1}`
-    })
+        p_top1.innerHTML = `${top1}`
+      })
   }
 
   function obterRankingGeral() {
@@ -176,8 +189,8 @@
               {
                 label: "Pontuação",
                 data: pontos,
-                backgroundColor: 'rgba(0, 255, 0, 0.2)',
-                borderColor: '#00d704',
+                backgroundColor: '#B22222',
+                borderColor: '#FF0000',
                 borderWidth: 2
               }
             ]
@@ -189,18 +202,13 @@
                 ticks: {
                   color: 'white'
                 },
-                grid: {
-                  color: 'rgba(255, 255, 255, 0.2)'
-                }
+
               },
               y: {
                 beginAtZero: true,
                 ticks: {
                   color: 'white'
                 },
-                grid: {
-                  color: 'rgba(255, 255, 255, 0.2)'
-                }
               }
             },
             plugins: {
@@ -326,13 +334,14 @@
                 data: tentativas,
                 backgroundColor:
                   'rgba(255, 99, 132, 0.6)',
-                borderColor: 
+                borderColor:
                   'rgba(255, 99, 132, 1)',
                 borderWidth: 1
               }]
           },
           options: {
             responsive: true,
+             maintainAspectRatio: false,
             plugins: {
               legend: {
                 position: 'bottom',

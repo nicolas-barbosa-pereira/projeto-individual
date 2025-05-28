@@ -1,79 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./../css/dashboards.css">
+    <link rel="stylesheet" href="../css/jogadores.css">
+
 
 </head>
-<body>
-    <canvas id="grafico"></canvas>
-    
+
+<body style="background-color: black;overflow: hidden;">
+    <div class="janela">
+        <div class="header-left">
+            <h1>N I K O</h1>
+
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario"></span>!</h3>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="ranking.html">
+                    <h3>Ranking</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav">
+                <h3>Quiz</h3>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="jogadores.html">
+                    <h3>Jogadores</h3>
+                </a>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+
+        </div>
+        <section class="body">
+            <h1>Jogadores favoritos</h1>
+<div class="divGeralJogadores">
+            <canvas id="grafico"></canvas>
+        </div>
+        </section>
+        
+    </div>
 </body>
+
 </html>
 <script>
     const ctx = document.getElementById("grafico").getContext("2d");
-let grafico1 = null;
+    let grafico1 = null;
 
-window.onload = () => {
-    fetch('/usuarios/jogadores', {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.length === 0) {
-            alert("Não possui dados para o gráfico");
-            return;
-        }
-
-        // Extrai nomes e votos
-        const nomes = data.map(i => i.jogadorFav);
-        const votos = data.map(i => i.votos);
-
-        if (grafico1 !== null) {
-            grafico1.destroy();
-        }
-
-        grafico1 = new Chart(ctx, {
-            type: "bar", // ou "pie"
-            data: {
-                labels: nomes,
-                datasets: [{
-                    label: "Votos por jogador",
-                    data: votos,
-                    backgroundColor: [
-                        "rgba(255, 99, 132, 0.6)",
-                        "rgba(54, 162, 235, 0.6)",
-                        "rgba(255, 206, 86, 0.6)",
-                        "rgba(75, 192, 192, 0.6)",
-                        "rgba(153, 102, 255, 0.6)"
-                    ],
-                    borderColor: "white",
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
+    window.onload = () => {
+        fetch('/usuarios/jogadores', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
             }
-        });
-    })
-    .catch(err => {
-        console.error("Erro ao obter os dados dos jogadores favoritos:", err);
-    });
-};
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.length === 0) {
+                    alert("Não possui dados para o gráfico");
+                    return;
+                }
+
+                // Extrai nomes e votos
+                const nomes = data.map(i => i.jogadorFav);
+                const votos = data.map(i => i.votos);
+
+                if (grafico1 !== null) {
+                    grafico1.destroy();
+                }
+
+                grafico1 = new Chart(ctx, {
+                    type: "bar", // ou "pie"
+                    data: {
+                        labels: nomes,
+                        datasets: [{
+                            label: "Votos por jogador",
+                            data: votos,
+                            backgroundColor: [
+                                "rgba(255, 99, 132, 0.6)",
+                                "rgba(54, 162, 235, 0.6)",
+                                "rgba(255, 206, 86, 0.6)",
+                                "rgba(75, 192, 192, 0.6)",
+                                "rgba(153, 102, 255, 0.6)"
+                            ],
+                            borderColor: "white",
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(err => {
+                console.error("Erro ao obter os dados dos jogadores favoritos:", err);
+            });
+    };
 
 </script>

@@ -1,0 +1,14 @@
+.body {
+    width: 65%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    margin-left: 430px;
+    margin-top: 45px;
+    border-radius: 12px;
+    color: white;
+}
