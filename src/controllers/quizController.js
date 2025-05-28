@@ -107,11 +107,20 @@ function listarQuizzes(req, res) {
         });
 }
 
+function top1(req,res){
+    quizModel.top1()
+    .then(result => res.json(result))
+     .catch(err => {
+            console.error(err);
+            res.status(500).send("Erro ao listar quizzes");
+        });
+}
 module.exports ={
     cadastrarQuiz,
     registrarPontuacao,
     obterRankingGeral,
     obterRankingQuiz,
     obterTentativas,
-    listarQuizzes
+    listarQuizzes,
+    top1
 }

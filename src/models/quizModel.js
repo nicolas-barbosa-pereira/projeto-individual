@@ -74,6 +74,18 @@ function listarQuizzes() {
     return database.executar(instrucaoSql);
 }
 
+function top1(){
+    var instrucaoSql=`
+   select sum(p.pontos),
+    u.nome
+    from usuario u
+    inner join pontuacao p on p.fkusuario = u.idusuario
+    group by nome
+    limit 1;
+    `
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports ={
     cadastrarQuiz,
@@ -81,5 +93,6 @@ module.exports ={
     obterRankingGeral,
     obterTentativas,
     obterRankingQuiz,
-    listarQuizzes
+    listarQuizzes,
+    top1
 }

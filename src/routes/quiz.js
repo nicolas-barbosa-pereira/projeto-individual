@@ -28,4 +28,8 @@ router.get("/ranking", function (req, res) {
     quizController.listarQuizzes(req, res);
 });
 
+router.get("/top1", function(req, res){
+    quizController.top1(req,res);
+})
+
 module.exports=router;

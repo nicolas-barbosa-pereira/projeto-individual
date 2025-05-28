@@ -5,7 +5,9 @@ function jogadores() {
     console.log("acessei o user model na função jogadores");
 
     var instrucaoSql = `
-       SELECT jogadorFav, COUNT(*) AS votos
+       SELECT
+        
+        jogadorFav, COUNT(*) AS votos
 FROM usuario
 WHERE jogadorFav IS NOT NULL AND jogadorFav != ''
 GROUP BY jogadorFav

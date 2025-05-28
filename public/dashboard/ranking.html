@@ -92,6 +92,7 @@
     </div>
 
     <section class="dash">
+      <div id="div_top1"></div>
       <h2>Ranking Geral</h2>
       <div class="chart-container">
         <canvas id="graficoRankingGeral"></canvas>
@@ -125,6 +126,26 @@
   let grafico1 = null
   let grafico2 = null
   let grafico3 = null
+
+  function top1(){
+    fetch('/quiz/top1',{
+       method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => res.json())
+    .then(data=>{
+        if (data.length === 0) {
+          alert("não possui dados para a dashboard");
+          return;
+        }
+
+        const top1=data.map(i=>i.nome)
+
+        div_top1.innerHTML=`${top1}`
+    })
+  }
 
   function obterRankingGeral() {
     fetch(`/quiz/ranking/geral`, {
@@ -335,6 +356,7 @@
 
 
   window.onload = () => {
+    top1();
     fetch('/quiz/ranking', {
       method: "GET",
       headers: {
