@@ -72,6 +72,44 @@
             <span>Confirmação da Senha:</span>
             <input id="confirmacao_senha_input" type="password" placeholder="******" />
           </div>
+          <div class="campo">
+  <span>Jogador Favorito:</span>
+  <select id="jogadorfavorito">
+    <option value="">Selecione um jogador</option>
+    <option value="Hugo Souza">Hugo Souza</option>
+    <option value="Matheus Donelli">Matheus Donelli</option>
+    <option value="Felipe Longo">Felipe Longo</option>
+    <option value="Matheuzinho">Matheuzinho</option>
+    <option value="Diego Palacios">Diego Palacios</option>
+    <option value="Matheus Bidu">Matheus Bidu</option>
+    <option value="Fabrizio Angileri">Fabrizio Angileri</option>
+    <option value="Léo Maná">Léo Maná</option>
+    <option value="Hugo">Hugo</option>
+    <option value="Félix Torres">Félix Torres</option>
+    <option value="André Ramalho">André Ramalho</option>
+    <option value="Gustavo Henrique">Gustavo Henrique</option>
+    <option value="Cacá">Cacá</option>
+    <option value="João Pedro Tchoca">João Pedro Tchoca</option>
+    <option value="Maycon">Maycon</option>
+    <option value="Rodrigo Garro">Rodrigo Garro</option>
+    <option value="Raniele">Raniele</option>
+    <option value="André Carrillo">André Carrillo</option>
+    <option value="Breno Bidon">Breno Bidon</option>
+    <option value="Charles">Charles</option>
+    <option value="Ryan">Ryan</option>
+    <option value="José Martínez">José Martínez</option>
+    <option value="Igor Coronado">Igor Coronado</option>
+    <option value="Alex Santana">Alex Santana</option>
+    <option value="Yuri Alberto">Yuri Alberto</option>
+    <option value="Memphis Depay">Memphis Depay</option>
+    <option value="Romero">Romero</option>
+    <option value="Giovane">Giovane</option>
+    <option value="Héctor Hernández">Héctor Hernández</option>
+    <option value="Kayke">Kayke</option>
+    <option value="Talles Magno">Talles Magno</option>
+  </select>
+</div>
+
           <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
         <div id="div_aguardar" class="loading-div">
@@ -109,6 +147,7 @@
     var emailVar = email_input.value;
     var senhaVar = senha_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
+    var jogadorfavoritoVar= jogadorfavorito.value;
 
 
     
@@ -144,7 +183,8 @@
               // Agora vá para o arquivo routes/usuario.js
               nomeServer: nomeVar,
               emailServer: emailVar,
-              senhaServer: senhaVar
+              senhaServer: senhaVar,
+              jogadorfavoritoServer :jogadorfavoritoVar
             }),
           })
             .then(function (resposta) {
