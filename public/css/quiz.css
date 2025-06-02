@@ -73,14 +73,16 @@ body {
     align-items: center;
     color: white;
     margin-bottom: 150px;
+    font-family: var(--font-titulo);
 }
 
 .alternativas {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    width: 100%;
+    width: 60vw;
     height: 200px;
+    margin: auto;
 
 }
 
@@ -101,7 +103,9 @@ li {
 }
 
 .questao {
-    font-size: 70px;
+    font-size: 60px;
+    display: flex;
+    flex-wrap: wrap;
     text-align: center;
     margin-top: 30px;
     margin-bottom: 60px;
