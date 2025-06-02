@@ -62,24 +62,18 @@
         <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
       </div>
 
-      <div class="btn-nav">
-        <a href="ranking.html">
-          <h3>Ranking</h3>
-        </a>
-      </div>
+      <a href="ranking.html" class="button">
+        <h3>Ranking</h3>
+      </a>
 
-      <div class="btn-nav-white">
-        <a href="dashboard.html">
-          <h3>Quiz</h3>
-        </a>
-      </div>
+      <a href="dashboard.html" class="button">
+        <h3>Quiz</h3>
+      </a>
 
+      <a href="jogadores.html" class="button">
+        <h3>Jogadores</h3>
+      </a>
 
-      <div class="btn-nav-white">
-        <a href="jogadores.html">
-          <h3>Jogadores</h3>
-        </a>
-      </div>
 
       <div class="btn-logout" onclick="limparSessao()">
         <h3>Sair</h3>
@@ -94,9 +88,14 @@
 
           <canvas id="graficoRankingGeral"></canvas>
         </div>
-        <div id="div_top1">
-          <p id="p_top1">NIKÉ</p>
+        <div class="card">
+          <p class="card-title">O maior pontuador é:</p>
+          <p class="small_desc">
+          </p>
+          <div class="go-corner">
+          </div>
         </div>
+
 
       </div>
 
@@ -108,7 +107,7 @@
       </div>
 
       <div class="divGeralGraficoDuplo">
-        
+
 
         <div class="divGeralGraficoDois">
 
@@ -121,7 +120,7 @@
         <div class="divGeralGraficoTres">
           <h2>Total de Tentativas</h2>
           <div class="chart-container" id="graficoTres">
-            <canvas id="graficoTentativas" style="border-radius: 12px;"></canvas>
+            <canvas id="graficoTentativas"></canvas>
           </div>
         </div>
       </div>
@@ -154,12 +153,15 @@
           return;
         }
 
-        const top1 = data.map(i => i.nome)
+        const top1 = data.map(i => i.nome).join(', ');
 
-        p_top1.innerHTML = `${top1}`
+        const smallDesc = document.querySelector('.small_desc');
+        smallDesc.innerHTML = top1;
       })
+      .catch(err => {
+        console.error('Erro ao buscar top1:', err);
+      });
   }
-
   function obterRankingGeral() {
     fetch(`/quiz/ranking/geral`, {
       method: "GET",
@@ -189,8 +191,8 @@
               {
                 label: "Pontuação",
                 data: pontos,
-                backgroundColor: '#B22222',
-                borderColor: '#FF0000',
+                backgroundColor: 'rgba(255,255,255,0.2)',
+                borderColor: 'white',
                 borderWidth: 2
               }
             ]
@@ -259,8 +261,8 @@
               {
                 label: "Pontuação",
                 data: pontos,
-                backgroundColor: 'rgba(0, 255, 0, 0.2)',
-                borderColor: '#00d704',
+                backgroundColor: 'white',
+                borderColor: 'black',
                 borderWidth: 2
               }
             ]
@@ -273,7 +275,7 @@
                   color: 'white'
                 },
                 grid: {
-                  color: 'rgba(255, 255, 255, 0.2)'
+                  color: 'white'
                 }
               },
               y: {
@@ -330,28 +332,39 @@
             labels: nomes,
             datasets: [
               {
-                label: "tentativas",
+                label: "Tentativas",
                 data: tentativas,
-                backgroundColor:
-                  'rgba(255, 99, 132, 0.6)',
-                borderColor:
-                  'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-              }]
+                backgroundColor: [
+                  "#FFFFFF",
+                  "#black"
+                ],
+                borderColor: [
+                  "#white",
+                  "#white "
+                ],
+                // borderWidth: 2,
+                // borderColor:'white'
+              }
+            ]
           },
           options: {
             responsive: true,
-             maintainAspectRatio: false,
+            maintainAspectRatio: false,
             plugins: {
               legend: {
-                position: 'bottom',
+                position: "bottom",
                 labels: {
-                  color: 'white '
+                  color: "white",
+                  font: {
+                    size: 14
+                  }
                 }
               }
             }
           }
-        });
+        }
+
+        );
       })
       .catch(err => {
         console.error("Erro ao obter as tentivas:", err);

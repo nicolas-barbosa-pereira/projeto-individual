@@ -6,12 +6,14 @@
     <meta name="viewport" content="width='device-width', initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/quiz.css">
-    
+
 
 </head>
 
 <body style="overflow: hidden;">
-    <section class="container-quiz">
+    <section class="container_quiz ">
+        <img class="volta" onclick="voltar()" src="../assets/arrow_back_24dp_D9D9D9_FILL0_wght400_GRAD0_opsz24.png"
+            alt="">
         <div id="numeroQuestao"></div>
         <div class="questao" id="questao"></div>
         <ul class="alternativas" id="alternativas">
@@ -22,8 +24,11 @@
         </ul>
         <div class="score" id="score"></div>
         <div id="dashboardButtonContainer"></div>
-    </section>
+        <!-- <h1 style="color: white; font-size: 48px;">Resultado</h1>
 
+            <h3>Você acertou <strong>${acertou}</strong> perguntas de ${perguntas}</h3> -->
+
+    </section>
 
 </body>
 
@@ -38,10 +43,12 @@
     let pergunta = 0;
     let pontos = 0;
 
+    let acertou = 0
+    let errou = 0
 
     function pegaPergunta() {
         document.getElementById('questao').innerHTML = perguntas[pergunta];
-            document.getElementById('numeroQuestao').innerHTML = `${pergunta + 1}`;
+        document.getElementById('numeroQuestao').innerHTML = `${pergunta + 1}`;
         const opcoes = document.getElementById('alternativas').getElementsByTagName('button');
         for (let i = 0; i < alternativas[pergunta].length; i++) {
             opcoes[i].innerHTML = alternativas[pergunta][i];
@@ -59,9 +66,11 @@
         if (marcada === iscorrect[pergunta]) {
             resposta[marcada].classList.add('correct');
             pontos++;
+            acertou++
         } else {
             resposta[marcada].classList.add('incorrect');
             resposta[iscorrect[pergunta]].classList.add('correct');
+            errou++
         }
         pergunta++
 
@@ -83,6 +92,7 @@
         const fkusuario = sessionStorage.ID_USUARIO;
         const tentativas = 1;
 
+        // Enviar dados para o backend
         fetch("/quiz/pontuacao", {
             method: "POST",
             headers: {
@@ -103,10 +113,30 @@
             })
             .then(data => {
                 console.log("Pontuação registrada:", data);
+
+                // Mostrar o resumo e limpar o quiz
+                const container = document.querySelector('.container_quiz');
+                container.innerHTML = `
+            <div class="resultadoFinal">
+                <h1 style="color: white; font-size: 36px;">Resumo da Tentativa</h1>
+                <h3 style="color: white;">Você acertou <strong>${acertou}</strong> de ${perguntas.length} perguntas.</h3>
+                <h3 style="color: white;">Erros: <strong>${errou}</strong></h3>
+                <h3 style="color: white;">Pontuação total: <strong>${pontos}</strong></h3>
+                <button onclick="finaliza()" style="margin-top: 20px; padding: 10px 20px; font-size: 16px;">Ver Ranking</button>
+            </div>
+        `;
             })
             .catch(error => {
                 console.error("Erro:", error);
             });
     }
+function finaliza(){
+    window.location.href="ranking.html"
+}
+
     window.onload = pegaPergunta()
+
+    function voltar() {
+        window.history.back();
+    }
 </script>

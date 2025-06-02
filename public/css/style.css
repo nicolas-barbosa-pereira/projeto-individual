@@ -183,7 +183,7 @@
 /* -------------MANDAMENTOS---------------------------- */
 .mandamentos {
   width: 100%;
-  min-height: 3000px;
+  min-height: auto;
   background-image: url('../assets/brasoesempe.jpg'), url('../assets/brasoesempe.jpg');
   background-repeat: no-repeat, no-repeat;
   background-position: right center, left center;
@@ -197,21 +197,33 @@
   padding: 50px 20px;
   box-sizing: border-box;
   color: white;
+  font-family: var(--font-cori);
+  
 }
 
 .lista {
+  font-size: 24px;
   max-width: 600px;
   background-color: rgba(0, 0, 0, 0.6);
-  /* melhora a legibilidade */
   padding: 30px;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .lista .titulo {
-  font-family: var(--font-titulo);
+  font-size: 72px;
+  /* font-family: var(--font-titulo); */
 }
 
+.item{
+  font-size: 35px !important;
+}
 
+strong{
+  font-family:none;
+  font-size: 72px;
+}
 /* login ------------------------*/
 
 
@@ -334,18 +346,6 @@ select option {
   margin-top: 30px;
 }
 
-/* --------------------FOOTER---------------- */
-.footer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  background-color: black;
-}
-
-.footer .container {
-  color: #c98c21;
-}
 
 /* ----tratamentos */
 .alerta_erro {
