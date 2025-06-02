@@ -23,12 +23,17 @@
             <li><button onclick="valida(3)">D</button></li>
         </ul>
         <div class="score" id="score"></div>
+       
+
         <div id="dashboardButtonContainer"></div>
         <!-- <h1 style="color: white; font-size: 48px;">Resultado</h1>
 
             <h3>Você acertou <strong>${acertou}</strong> perguntas de ${perguntas}</h3> -->
 
     </section>
+     <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar" ></div>
+</div>
 
 </body>
 
@@ -54,6 +59,7 @@
             opcoes[i].innerHTML = alternativas[pergunta][i];
             opcoes[i].classList.remove('correct', 'incorrect');
         }
+        atualizarBarra()
     }
 
     function valida(marcada) {
@@ -73,6 +79,7 @@
             errou++
         }
         pergunta++
+atualizarBarra();
 
         setTimeout(function () {
             if (pergunta < perguntas.length) {
@@ -124,6 +131,7 @@
                 <h3 style="color: white;">Pontuação total: <strong>${pontos}</strong></h3>
                 <button onclick="finaliza()" style="margin-top: 20px; padding: 10px 20px; font-size: 16px;">Ver Ranking</button>
             </div>
+            
         `;
             })
             .catch(error => {
@@ -133,6 +141,11 @@
 function finaliza(){
     window.location.href="ranking.html"
 }
+function atualizarBarra() {
+    const progress = ((pergunta) / perguntas.length) * 100;
+    document.getElementById('progressBar').style.width = `${progress}%`;
+}
+
 
     window.onload = pegaPergunta()
 
