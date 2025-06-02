@@ -153,33 +153,55 @@ li {
     border: 3px solid #ff0000;
 }
 
-
 .resultadoFinal {
-  background-color: #393939;
-    border: 4px solid black;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 0 20px #00000070;
-    margin: 40px auto;
-    width: 800px;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;}
+  position: relative;
+  overflow: hidden;
+  border: 4px solid black;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 20px #00000070;
+  margin: 40px auto;
+  width: 600px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  z-index: 1;
+}
+
+.resultadoFinal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/logocoricinza.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  filter: blur(4px);
+  z-index: -1;
+  margin: solid black 2px;
+
+}
 
 .resultadoFinal button {
-    background-color: #4CAF50;
+    background-color: #000000;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 150px;
+    height: 50px;
 }
 
 .resultadoFinal button:hover {
-    background-color: #45a049;
+    background-color: #ffffff;
+    color: black;
 }
-
 
 .progress-bar-container {
     position: fixed;

@@ -35,34 +35,39 @@
     <div class="progress-bar" id="progressBar" ></div>
 </div>
 
+
 </body>
 
 </html>
 <script>
-    const perguntas = [
-  "Em qual clube europeu Cássio atuou antes de se destacar no Corinthians?",
-  "Qual foi o adversário do Corinthians na final do Mundial de Clubes de 2012, onde Cássio foi eleito o melhor em campo?",
-  "Quantas vezes Cássio foi eleito o melhor jogador em campo durante a campanha da Libertadores de 2012?",
-  "Qual é o recorde histórico que Cássio quebrou no Corinthians em 2022?",
-  "Qual técnico era o comandante do Corinthians quando Cássio chegou ao clube em 2012?",
-  "Qual foi a defesa mais lembrada de Cássio na Libertadores de 2012, que garantiu a classificação do Corinthians para a semifinal?",
-  "Em qual competição Cássio foi homenageado com uma estátua no Parque São Jorge?",
-  "Qual destes jogadores foi colega de Cássio tanto no Corinthians quanto na Seleção Brasileira?"
-];
+//     const perguntas = [
+//   "Em qual clube europeu Cássio atuou antes de se destacar no Corinthians?",
+//   "Qual foi o adversário do Corinthians na final do Mundial de Clubes de 2012, onde Cássio foi eleito o melhor em campo?",
+//   "Quantas vezes Cássio foi eleito o melhor jogador em campo durante a campanha da Libertadores de 2012?",
+//   "Qual é o recorde histórico que Cássio quebrou no Corinthians em 2022?",
+//   "Qual técnico era o comandante do Corinthians quando Cássio chegou ao clube em 2012?",
+//   "Qual foi a defesa mais lembrada de Cássio na Libertadores de 2012, que garantiu a classificação do Corinthians para a semifinal?",
+//   "Em qual competição Cássio foi homenageado com uma estátua no Parque São Jorge?",
+//   "Qual destes jogadores foi colega de Cássio tanto no Corinthians quanto na Seleção Brasileira?"
+// ];
 
-const alternativas = [
-  ["Benfica", "Sporting", "PSV Eindhoven", "Ajax"],
-  ["Chelsea", "Liverpool", "Bayern de Munique", "Manchester United"],
-  ["1 vez", "2 vezes", "3 vezes", "4 vezes"],
-  ["Mais jogos como goleiro do clube", "Mais títulos no século", "Maior número de pênaltis defendidos", "Jogador com mais cartões amarelos"],
-  ["Tite", "Carille", "Mano Menezes", "Luxemburgo"],
-  ["Defesa em chute de Diego Souza", "Pênalti contra o Boca", "Chute cruzado do Neymar", "Cabeçada de Guerrero"],
-  ["Paulistão 2013", "Mundial de Clubes 2012", "Brasileirão 2015", "Nenhuma - foi homenagem pelo número de jogos"],
-  ["Yuri Alberto", "Emerson Sheik", "Paulinho", "Gil"]
-];
+// const alternativas = [
+//   ["Benfica", "Sporting", "PSV Eindhoven", "Ajax"],
+//   ["Chelsea", "Liverpool", "Bayern de Munique", "Manchester United"],
+//   ["1 vez", "2 vezes", "3 vezes", "4 vezes"],
+//   ["Mais jogos como goleiro do clube", "Mais títulos no século", "Maior número de pênaltis defendidos", "Jogador com mais cartões amarelos"],
+//   ["Tite", "Carille", "Mano Menezes", "Luxemburgo"],
+//   ["Defesa em chute de Diego Souza", "Pênalti contra o Boca", "Chute cruzado do Neymar", "Cabeçada de Guerrero"],
+//   ["Paulistão 2013", "Mundial de Clubes 2012", "Brasileirão 2015", "Nenhuma - foi homenagem pelo número de jogos"],
+//   ["Yuri Alberto", "Emerson Sheik", "Paulinho", "Gil"]
+// ];
 
-const iscorrect = [2, 0, 3, 0, 0, 0, 3, 2];
-
+// const iscorrect = [2, 0, 3, 0, 0, 0, 3, 2];
+const perguntas = ['Por que o cássio é frango?', 'pergunta 2'];
+    const alternativas = [
+        ['Com fé no pé', 'Gabi--Gol', 'Arrascaeta', 'Todos'],
+        ['errada    ', 'e', 'l', 'ceerta']];
+    const iscorrect = [3, 2];
 
     let pergunta = 0;
     let pontos = 0;
@@ -144,11 +149,12 @@ atualizarBarra();
                 const container = document.querySelector('.container_quiz');
                 container.innerHTML = `
             <div class="resultadoFinal">
-                <h1 style="color: white; font-size: 36px;">Resumo da Tentativa</h1>
-                <h3 style="color: white;">Você acertou <strong>${acertou}</strong> de ${perguntas.length} perguntas.</h3>
-                <h3 style="color: white;">Erros: <strong>${errou}</strong></h3>
-                <h3 style="color: white;">Pontuação total: <strong>${pontos}</strong></h3>
-                <button onclick="finaliza()" style="margin-top: 20px; padding: 10px 20px; font-size: 16px;">Ver Ranking</button>
+                <h1 style="color: black;text-shadow: 2px 2px 4px white;
+ font-size: 72px;">Parabéns!<img style="width: 60px; height: 70px;" src="../assets/check.png" alt=""></h1>
+                <h3 style="text-shadow: 2px 2px 4px white;color: black;font-size:35px">Você acertou <strong>${acertou}</strong> de ${perguntas.length} perguntas.</h3>
+                <h3 style="text-shadow: 2px 2px 4px white;color: black;font-size:35px">Erros: <strong>${errou}</strong></h3>
+                <h3 style="text-shadow: 2px 2px 4px white;color: black;font-size:35px">Pontuação total: <strong>${pontos}</strong></h3>
+                <button onclick="finalizar()" style="margin-top: 20px; padding: 10px 20px; font-size: 28px; ">Sair</button>
             </div>
             
         `;
@@ -157,9 +163,11 @@ atualizarBarra();
                 console.error("Erro:", error);
             });
     }
-function finaliza(){
+
+function finalizar(){
     window.location.href="ranking.html"
 }
+
 function atualizarBarra() {
     const progress = ((pergunta) / perguntas.length) * 100;
     document.getElementById('progressBar').style.width = `${progress}%`;
