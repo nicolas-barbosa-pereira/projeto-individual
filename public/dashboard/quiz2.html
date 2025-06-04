@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width='device-width', initial-scale=1.0">
-    <title>QUIZ Ídolos</title>
+    <title>QUIZ idolos</title>
     <link rel="stylesheet" href="../css/quiz.css">
+
+
 </head>
 
 <body style="overflow: hidden;">
@@ -21,7 +23,7 @@
             <li><button onclick="valida(3)">D</button></li>
         </ul>
         <div class="score" id="score"></div>
-       
+
 
         <div id="dashboardButtonContainer"></div>
         <!-- <h1 style="color: white; font-size: 48px;">Resultado</h1>
@@ -29,9 +31,9 @@
             <h3>Você acertou <strong>${acertou}</strong> perguntas de ${perguntas}</h3> -->
 
     </section>
-     <div class="progress-bar-container">
-    <div class="progress-bar" id="progressBar" ></div>
-</div>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
 
 
 </body>
@@ -39,33 +41,60 @@
 </html>
 <script>
     const perguntas = [
-  "Em qual clube europeu Cássio atuou antes de se destacar no Corinthians?",
-  "Qual foi o adversário do Corinthians na final do Mundial de Clubes de 2012, onde Cássio foi eleito o melhor em campo?",
-  "Quantas vezes Cássio foi eleito o melhor jogador em campo durante a campanha da Libertadores de 2012?",
-  "Qual é o recorde histórico que Cássio quebrou no Corinthians em 2022?",
-  "Qual técnico era o comandante do Corinthians quando Cássio chegou ao clube em 2012?",
-  "Qual foi a defesa mais lembrada de Cássio na Libertadores de 2012, que garantiu a classificação do Corinthians para a semifinal?",
-  "Em qual competição Cássio foi homenageado com uma estátua no Parque São Jorge?",
-  "Qual destes jogadores foi colega de Cássio tanto no Corinthians quanto na Seleção Brasileira?"
-];
+        "Quantos gols Cláudio Christóvam de Pinho marcou pelo Corinthians, tornando-se o maior artilheiro da história do clube?",
+        "Em que ano Ronaldo Fenômeno foi contratado pelo Corinthians e quantos gols ele marcou durante sua passagem?",
+        "Quem foi o autor do gol decisivo na final do Mundial de Clubes da FIFA de 2012, garantindo o título ao Corinthians?",
+        "Qual jogador do Corinthians é conhecido pelo apelido 'Canhão da Fiel' devido à potência de seus chutes e sua força?",
+        "Quantas vezes Marcelinho Carioca conquistou o Campeonato Paulista vestindo a camisa do Corinthians?",
+        "Antes de se tornar ídolo no Corinthians, por qual clube brasileiro Sócrates atuou?",
+        "Em que ano o Corinthians conquistou sua primeira Copa Libertadores da América, e quem foi o artilheiro do time na competição?",
+        "Qual foi a sequência de jogos consecutivos disputados pelo zagueiro Chicão pelo Corinthians entre 2008 e 2012?",
+        "Qual atacante do Corinthians marcou gols decisivos contra o Boca Juniors na final da Libertadores de 2012?",
+        "Antes de retornar ao Brasil em 2012, por qual clube europeu Cássio atuou?",
 
-const alternativas = [
-  ["Benfica", "Sporting", "PSV Eindhoven", "Ajax"],
-  ["Chelsea", "Liverpool", "Bayern de Munique", "Manchester United"],
-  ["1 vez", "2 vezes", "3 vezes", "4 vezes"],
-  ["Mais jogos como goleiro do clube", "Mais títulos no século", "Maior número de pênaltis defendidos", "Jogador com mais cartões amarelos"],
-  ["Tite", "Carille", "Mano Menezes", "Luxemburgo"],
-  ["Defesa em chute de Diego Souza", "Pênalti contra o Boca", "Chute cruzado do Neymar", "Cabeçada de Guerrero"],
-  ["Paulistão 2013", "Mundial de Clubes 2012", "Brasileirão 2015", "Nenhuma - foi homenagem pelo número de jogos"],
-  ["Yuri Alberto", "Emerson Sheik", "Paulinho", "Gil"]
-];
+        "Quantos títulos do Campeonato Paulista Emerson Sheik conquistou jogando pelo Corinthians?",
 
-const iscorrect = [2, 0, 3, 0, 0, 0, 3, 2];
-// const perguntas = ['Por que o cássio é frango?', 'pergunta 2'];
-//     const alternativas = [
-//         ['Com fé no pé', 'Gabi--Gol', 'Arrascaeta', 'Todos'],
-//         ['errada    ', 'e', 'l', 'ceerta']];
-//     const iscorrect = [3, 2];
+        "Qual volante do Corinthians, conhecido como 'Pitbull', destacou-se pela sua marcação entre 2010 e 2014?",
+
+        "Em qual estádio Marcelinho Carioca marcou seu 100º gol pelo Corinthians?",
+
+
+        "Quem foi eleito o melhor jogador da final do Mundial de Clubes da FIFA de 2012, representando o Corinthians?",
+
+        "Quem fez o gol que acabou com o jejum de 23 anos ?",
+        "Em que ano o Corinthians foi rebaixado?"
+    ];
+
+    const alternativas = [
+        ["311 gols", "305 gols", "306 gols", "290 gols"],
+        ["2008 - 35 gols", "2009 - 35 gols", "2011 - 29 gols", "2010 - 30 gols"],
+        ["Danilo", "Paolo Guerrero", "Romarinho", "Emerson Sheik"],
+        ["Sócrates", "Celio Silva", "Rivelino", "Roberto Rivellino"],
+        ["5 vezes", "3 vezes", "4 vezes", "2 vezes"],
+        ["Ponte Preta", "Botafogo-SP", "Flamengo", "Santos"],
+        ["2011-Danilo", "2013 - Paolo Guerrero", "2012 - Emerson Sheik", "2015 - Vagner Love"],
+        ["247 jogos", "205 jogos", "97 jogos", "190 jogos"],
+        ["Danilo", "Emerson Sheik", "Paolo Guerrero", "Jorge Henrique"],
+        ["PSV Eindhoven", "Sporting", "Benfica", "Ajax"],
+        ["1", "2", "4", "3"],
+        ["Elias", "Paulinho", "Ralf", "Bruno Henrique"],
+        ["Maracanã", "Arena Corinthians", "Morumbi", "Pacaembu"],
+        ["Cássio", "Danilo", "Paolo Guerrero", "Emerson Sheik"],
+        ["Basílio", "Rivellino", "Socrate", "Gil"],
+
+        ["2006", "2010", "2009", "2007"],
+
+
+
+    ];
+    const iscorrect = [2, 0, 1, 1, 2, 1, 2, 0, 1, 0, 1, 2, 3,
+        0, 0, 3];
+
+    // const perguntas = ['Por que o cássio é frango?', 'pergunta 2'];
+    //     const alternativas = [
+    //         ['Com fé no pé', 'Gabi--Gol', 'Arrascaeta', 'Todos'],
+    //         ['errada    ', 'e', 'l', 'ceerta']];
+    //     const iscorrect = [3, 2];
 
     let pergunta = 0;
     let pontos = 0;
@@ -101,7 +130,7 @@ const iscorrect = [2, 0, 3, 0, 0, 0, 3, 2];
             errou++
         }
         pergunta++
-atualizarBarra();
+        atualizarBarra();
 
         setTimeout(function () {
             if (pergunta < perguntas.length) {
@@ -117,7 +146,7 @@ atualizarBarra();
 
     // "/pontuacao" rota para usar no meu fetch
     function finalizaquiz() {
-        const fkquiz = 1;
+        const fkquiz = 2;
         const fkusuario = sessionStorage.ID_USUARIO;
         const tentativas = 1;
 
@@ -160,14 +189,14 @@ atualizarBarra();
             });
     }
 
-function finalizar(){
-    window.location.href="ranking.html"
-}
+    function finalizar() {
+        window.location.href = "ranking.html"
+    }
 
-function atualizarBarra() {
-    const progress = ((pergunta) / perguntas.length) * 100;
-    document.getElementById('progressBar').style.width = `${progress}%`;
-}
+    function atualizarBarra() {
+        const progress = ((pergunta) / perguntas.length) * 100;
+        document.getElementById('progressBar').style.width = `${progress}%`;
+    }
 
 
     window.onload = pegaPergunta()

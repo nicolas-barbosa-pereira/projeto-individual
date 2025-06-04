@@ -157,8 +157,8 @@ align-items: center;
 .card {
   display: block;
   position: relative;
-  max-width: 300px;
-  max-height: 320px;
+  max-width: 250px;
+  max-height: 300px;
   background-color: #212121;
   border-radius: 10px;
   padding: 2em 1.2em;
@@ -214,6 +214,19 @@ align-items: center;
 }
 
 
+.small_desc1 {
+  font-size: 25px;
+  font-weight: bold;
+  color: #e30613;
+  transition: all 0.5s ease-out;
+  transform: scale(1); 
+}
+
+.card:hover .small_desc1 {
+  color: rgba(255, 255, 255, 0.9);
+  transform: scale(1.5);
+}
+
 
 .card:hover .card-title {
   color: #fff;
@@ -240,4 +253,10 @@ align-items: center;
   margin-right: -4px;
   color: white;
   font-family: courier, sans;
+}
+.kpis{
+  display: flex;
+  gap: 20px;
+  justify-content: center ;
+  flex-wrap: wrap;
 }

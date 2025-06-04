@@ -49,9 +49,6 @@
   }
 </style>
 
-
-<!-- <body onload=" atualizarFeed()"> -->
-
 <body>
 
   <div class="janela">
@@ -88,14 +85,23 @@
 
           <canvas id="graficoRankingGeral"></canvas>
         </div>
-        <div class="card">
-          <p class="card-title">O maior pontuador é:</p>
-          <p class="small_desc">
-          </p>
-          <div class="go-corner">
+        <section class="kpis">
+          <div class="card">
+            <p class="card-title">O maior pontuador é:</p>
+            <p class="small_desc">
+            </p>
+            <div class="go-corner">
+            </div>
           </div>
-        </div>
 
+          <div class="card">
+            <p class="card-title">Jogador favorito:</p>
+            <p class="small_desc1">
+            </p>
+            <div class="go-corner">
+            </div>
+          </div>
+        </section>
 
       </div>
 
@@ -139,6 +145,33 @@
   let grafico2 = null
   let grafico3 = null
 
+
+  function jogador1() {
+    fetch('/usuarios/jogadores', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.length === 0) {
+          alert("Não possui dados para o gráfico");
+          return;
+        }
+
+        const jogador1 = data[0].jogadorFav;
+        const smallDesc = document.querySelector('.small_desc1');
+
+        smallDesc.innerHTML = jogador1;
+
+      })
+      .catch(err => {
+        console.error("Erro ao buscar jogadores:", err);
+      });
+  }
+
+
   function top1() {
     fetch('/quiz/top1', {
       method: "GET",
@@ -162,7 +195,7 @@
         console.error('Erro ao buscar top1:', err);
       });
   }
-  
+
   function obterRankingGeral() {
     fetch(`/quiz/ranking/geral`, {
       method: "GET",
@@ -262,7 +295,7 @@
               {
                 label: "Pontuação",
                 data: pontos,
-                backgroundColor: 'white',
+                backgroundColor: "rgba(255, 255, 255, 0.9)",
                 borderColor: 'black',
                 borderWidth: 2
               }
@@ -336,13 +369,16 @@
                 label: "Tentativas",
                 data: tentativas,
                 backgroundColor: [
-                  "#FFFFFF",
-                  "#black"
+                  "rgba(255, 255, 255, 1)",
+                  "rgba(0, 0, 0, 1)",
+                  "rgba(58, 58, 58, 1)"
                 ],
                 borderColor: [
-                  "#white",
-                  "#white "
-                ],
+                  "rgba(0, 0, 0, 1)",
+                  // "rgba(255, 255, 255, 1)",  
+                  // "rgba(58, 58, 58, 1)"      
+                ]
+
                 // borderWidth: 2,
                 // borderColor:'white'
               }
@@ -379,6 +415,7 @@
 
 
   window.onload = () => {
+    jogador1()
     top1();
     fetch('/quiz/ranking', {
       method: "GET",

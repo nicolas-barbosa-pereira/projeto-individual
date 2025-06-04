@@ -18,6 +18,7 @@ function attPontuacao(fkquiz,fkusuario,pontos,tentativas){
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+
 function obterRankingQuiz(fkquiz){
     var instrucaoSql=`
         SELECT 
