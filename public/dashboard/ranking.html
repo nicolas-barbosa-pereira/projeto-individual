@@ -148,12 +148,7 @@
 
 
   function jogador1() {
-    fetch('/usuarios/jogadores', {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
+    fetch('/usuarios/jogadores')
       .then(res => res.json())
       .then(data => {
         if (data.length === 0) {
@@ -171,6 +166,7 @@
         console.error("Erro ao buscar jogadores:", err);
       });
   }
+
 
 
   function top1() {
